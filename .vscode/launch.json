@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-Application<core>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.l2m.Application",
+      "projectName": "core",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-CoreApplication<core>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.l2m.CoreApplication",
+      "projectName": "core",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

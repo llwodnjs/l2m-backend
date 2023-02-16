@@ -1,0 +1,286 @@
+2023-02-16 16:30:07.485 restartedMain [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+1. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime, primary key (businessKeyStoreId)) type=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 1. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime, primary key (businessKeyStoreId)) type=InnoDB 
+2023-02-16 16:30:07.518 restartedMain [] ERROR jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+1. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime, primary key (businessKeyStoreId)) type=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 1. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime, primary key (businessKeyStoreId)) type=InnoDB 
+java.sql.SQLSyntaxErrorException: (conn=443) You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'type=InnoDB' at line 1
+	at org.mariadb.jdbc.export.ExceptionFactory.createException(ExceptionFactory.java:282)
+	at org.mariadb.jdbc.export.ExceptionFactory.create(ExceptionFactory.java:370)
+	at org.mariadb.jdbc.message.ClientMessage.readPacket(ClientMessage.java:137)
+	at org.mariadb.jdbc.client.impl.StandardClient.readPacket(StandardClient.java:840)
+	at org.mariadb.jdbc.client.impl.StandardClient.readResults(StandardClient.java:779)
+	at org.mariadb.jdbc.client.impl.StandardClient.readResponse(StandardClient.java:698)
+	at org.mariadb.jdbc.client.impl.StandardClient.execute(StandardClient.java:641)
+	at org.mariadb.jdbc.Statement.executeInternal(Statement.java:935)
+	at org.mariadb.jdbc.Statement.execute(Statement.java:1061)
+	at org.mariadb.jdbc.Statement.execute(Statement.java:452)
+	at net.sf.log4jdbc.sql.jdbcapi.StatementSpy.execute(StatementSpy.java:923)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:563)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:508)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:278)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:71)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:208)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:115)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:192)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:81)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:327)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:471)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1498)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.l2m.CoreApplication.main(CoreApplication.java:13)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2023-02-16 16:30:07.524 restartedMain [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+1. create table Member (memberId bigint not null, createDateTime datetime, createUserKey varchar(13), updateDateTime datetime, updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) type=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 1. create table Member (memberId bigint not null, createDateTime datetime, createUserKey varchar(13), updateDateTime datetime, updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) type=InnoDB 
+2023-02-16 16:30:07.547 restartedMain [] ERROR jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+1. create table Member (memberId bigint not null, createDateTime datetime, createUserKey varchar(13), updateDateTime datetime, updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) type=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 1. create table Member (memberId bigint not null, createDateTime datetime, createUserKey varchar(13), updateDateTime datetime, updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) type=InnoDB 
+java.sql.SQLSyntaxErrorException: (conn=443) You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'type=InnoDB' at line 1
+	at org.mariadb.jdbc.export.ExceptionFactory.createException(ExceptionFactory.java:282)
+	at org.mariadb.jdbc.export.ExceptionFactory.create(ExceptionFactory.java:370)
+	at org.mariadb.jdbc.message.ClientMessage.readPacket(ClientMessage.java:137)
+	at org.mariadb.jdbc.client.impl.StandardClient.readPacket(StandardClient.java:840)
+	at org.mariadb.jdbc.client.impl.StandardClient.readResults(StandardClient.java:779)
+	at org.mariadb.jdbc.client.impl.StandardClient.readResponse(StandardClient.java:698)
+	at org.mariadb.jdbc.client.impl.StandardClient.execute(StandardClient.java:641)
+	at org.mariadb.jdbc.Statement.executeInternal(Statement.java:935)
+	at org.mariadb.jdbc.Statement.execute(Statement.java:1061)
+	at org.mariadb.jdbc.Statement.execute(Statement.java:452)
+	at net.sf.log4jdbc.sql.jdbcapi.StatementSpy.execute(StatementSpy.java:923)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:54)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:563)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:508)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.createTable(AbstractSchemaMigrator.java:278)
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:71)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:208)
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:115)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:192)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:81)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:327)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:471)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1498)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:731)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:307)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1303)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1292)
+	at com.l2m.CoreApplication.main(CoreApplication.java:13)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+2023-02-16 16:32:13.640 restartedMain [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+11. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime(6), primary key (businessKeyStoreId)) engine=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 11. create table BusinessKeyStore (businessKeyStoreId bigint not null, businessKey varchar(255), createDateTime datetime(6), primary key (businessKeyStoreId)) engine=InnoDB 
+2023-02-16 16:32:13.699 restartedMain [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+11. create table Member (memberId bigint not null, createDateTime datetime(6), createUserKey varchar(13), updateDateTime datetime(6), updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) engine=InnoDB
+
+ 
+    com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) 11. create table Member (memberId bigint not null, createDateTime datetime(6), createUserKey varchar(13), updateDateTime datetime(6), updateUserKey varchar(13), businessKey varchar(255), name varchar(255), password varchar(255), username varchar(255), primary key (memberId)) engine=InnoDB 
+2023-02-16 16:33:27.338 http-nio-35060-exec-9 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+11. select businesske0_.businessKeyStoreId as col_0_0_ from BusinessKeyStore businesske0_ where businesske0_.businessKey='MEM0946442579' limit 1
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 11. select
+        businesske0_.businessKeyStoreId as col_0_0_ 
+    from
+        BusinessKeyStore businesske0_ 
+    where
+        businesske0_.businessKey='MEM0946442579' limit 1 
+2023-02-16 16:33:27.400 http-nio-35060-exec-9 [] INFO  jdbc.resultsettable - 
+|-------------------|
+|businesskeystoreid |
+|-------------------|
+|-------------------|
+
+ 
+    |-------------------| |businesskeystoreid | |-------------------| |-------------------| 
+2023-02-16 16:36:44.639 http-nio-35060-exec-2 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+1. select businesske0_.businessKeyStoreId as col_0_0_ from BusinessKeyStore businesske0_ where businesske0_.businessKey='MEM0027147855' limit 1
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 1. select
+        businesske0_.businessKeyStoreId as col_0_0_ 
+    from
+        BusinessKeyStore businesske0_ 
+    where
+        businesske0_.businessKey='MEM0027147855' limit 1 
+2023-02-16 16:36:44.752 http-nio-35060-exec-2 [] INFO  jdbc.resultsettable - 
+|-------------------|
+|businesskeystoreid |
+|-------------------|
+|-------------------|
+
+ 
+    |-------------------| |businesskeystoreid | |-------------------| |-------------------| 
+2023-02-16 16:37:59.685 http-nio-35060-exec-3 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+1. select businesske0_.businessKeyStoreId as col_0_0_ from BusinessKeyStore businesske0_ where businesske0_.businessKey='MEM0507413942' limit 1
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 1. select
+        businesske0_.businessKeyStoreId as col_0_0_ 
+    from
+        BusinessKeyStore businesske0_ 
+    where
+        businesske0_.businessKey='MEM0507413942' limit 1 
+2023-02-16 16:37:59.728 http-nio-35060-exec-3 [] INFO  jdbc.resultsettable - 
+|-------------------|
+|businesskeystoreid |
+|-------------------|
+|-------------------|
+
+ 
+    |-------------------| |businesskeystoreid | |-------------------| |-------------------| 
+2023-02-16 16:39:56.549 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+11. select businesske0_.businessKeyStoreId as col_0_0_ from BusinessKeyStore businesske0_ where businesske0_.businessKey='MEM0590581416' limit 1
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 11. select
+        businesske0_.businessKeyStoreId as col_0_0_ 
+    from
+        BusinessKeyStore businesske0_ 
+    where
+        businesske0_.businessKey='MEM0590581416' limit 1 
+2023-02-16 16:39:56.594 http-nio-35060-exec-1 [] INFO  jdbc.resultsettable - 
+|-------------------|
+|businesskeystoreid |
+|-------------------|
+|-------------------|
+
+ 
+    |-------------------| |businesskeystoreid | |-------------------| |-------------------| 
+2023-02-16 16:39:58.864 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+12. select next_val as id_val from hibernate_sequence for update
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 12. select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-16 16:39:58.905 http-nio-35060-exec-1 [] INFO  jdbc.resultsettable - 
+|---------|
+|next_val |
+|---------|
+|86       |
+|---------|
+
+ 
+    |---------| |next_val | |---------| |86       | |---------| 
+2023-02-16 16:39:58.921 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+12. update hibernate_sequence set next_val= 87 where next_val=86
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) 12. update
+        hibernate_sequence 
+    set
+        next_val= 87 
+    where
+        next_val=86 
+2023-02-16 16:40:00.773 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52)
+12. select next_val as id_val from hibernate_sequence for update
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) 12. select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-16 16:40:00.804 http-nio-35060-exec-1 [] INFO  jdbc.resultsettable - 
+|---------|
+|next_val |
+|---------|
+|87       |
+|---------|
+
+ 
+    |---------| |next_val | |---------| |87       | |---------| 
+2023-02-16 16:40:00.805 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+12. update hibernate_sequence set next_val= 88 where next_val=87
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) 12. update
+        hibernate_sequence 
+    set
+        next_val= 88 
+    where
+        next_val=87 
+2023-02-16 16:40:00.899 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+11. insert into BusinessKeyStore (businessKey, createDateTime, businessKeyStoreId) values ('MEM0590581416', '02/16/2023 16:40:00.887', 86)
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) 11. insert 
+    into
+        BusinessKeyStore
+        (businessKey, createDateTime, businessKeyStoreId) 
+    values
+        ('MEM0590581416', '02/16/2023 16:40:00.887', 86) 
+2023-02-16 16:40:00.989 http-nio-35060-exec-1 [] DEBUG jdbc.sqlonly -  com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61)
+11. insert into Member (createDateTime, createUserKey, updateDateTime, updateUserKey, businessKey, name, password, username, memberId) values ('02/16/2023 16:40:00.982', NULL, '02/16/2023 16:40:00.982', NULL, 'MEM0590581416', '이재원', 'testD123!', 'llwodnjs@naver.com', 87)
+
+ 
+    com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) 11. insert 
+    into
+        Member
+        (createDateTime, createUserKey, updateDateTime, updateUserKey, businessKey, name, password, username, memberId) 
+    values
+        ('02/16/2023 16:40:00.982', NULL, '02/16/2023 16:40:00.982', NULL, 'MEM0590581416', '이재원', 'testD123!', 'llwodnjs@naver.com', 87) 
