@@ -34,6 +34,11 @@ spring:
 server:
   port: 35060
 
+jwt:
+  header: Authorization
+  secret:
+    key: C&F)J@NcRfUjXn2r5u8x/A?D*G-KaPdS
+
 # 경로 관련
 filepath:
   dir: '/'
