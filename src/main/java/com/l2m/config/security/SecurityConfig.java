@@ -1,6 +1,7 @@
 package com.l2m.config.security;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,19 +39,21 @@ public class SecurityConfig {
         .httpBasic().disable()
         // 쿠키 기반이 아닌 JWT 기반이므로 사용하지 않음
         .csrf().disable()
-        .cors()
-        .and()
+        // .cors()
+        // .and()
         // CORS 설정
-        // .cors(c -> {
-        //   CorsConfigurationSource source = request -> {
-        //     // Cors 허용 패턴
-        //     CorsConfiguration config = new CorsConfiguration();
-        //     config.setAllowedOrigins(Arrays.asList("*"));
-        //     config.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH"));
-        //     return config;
-        //   };
-        //   c.configurationSource(source);
-        // })
+        .cors(c -> {
+          CorsConfigurationSource source = request -> {
+            // Cors 허용 패턴
+            CorsConfiguration config = new CorsConfiguration();
+            config.addAllowedOriginPattern("*");
+            config.addAllowedHeader("*");
+            config.addAllowedMethod("*");
+            config.addAllowedOrigin("*");
+            return config;
+          };
+          c.configurationSource(source);
+        })
         // Spring Security 세션 정책 : 세션을 생성 및 사용하지 않음
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
@@ -59,7 +64,7 @@ public class SecurityConfig {
         // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
         // .antMatchers("/admin/**").hasRole("ADMIN")
         // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
-        // .antMatchers("/user/**").hasRole("USER")
+        .antMatchers("/user/**").hasRole("USER")
         .anyRequest().denyAll()
         .and()
         // JWT 인증 필터 적용

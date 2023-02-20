@@ -34,7 +34,7 @@ public class JwtProvider {
   private Key secretKey;
 
   // 만료시간 : 1Hour
-  private final long exp = 1L;
+  private final long exp = 1000L * 60L * 60L;
 
   private final JwtUserDetailsService userDetailsService;
 
@@ -78,7 +78,7 @@ public class JwtProvider {
   public boolean validateToken(String token) {
     try {
       // Bearer 검증
-      if (!token.substring(0, "BEARER ".length()).equalsIgnoreCase("BEARER ")) {
+      if (!token.substring(0, "Bearer ".length()).equalsIgnoreCase("Bearer ")) {
         return false;
       } else {
         token = token.split(" ")[1].trim();

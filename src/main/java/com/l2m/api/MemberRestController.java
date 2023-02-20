@@ -1,5 +1,6 @@
 package com.l2m.api;
 
+import org.springframework.context.annotation.Role;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

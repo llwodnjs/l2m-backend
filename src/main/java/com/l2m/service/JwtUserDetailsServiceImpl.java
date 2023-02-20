@@ -10,9 +10,11 @@ import com.l2m.model.CustomUserDetails;
 import com.l2m.repository.support.MemberRepositorySupport;
 
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class JwtUserDetailsServiceImpl implements JwtUserDetailsService {
   @NonNull
   private MemberRepositorySupport memberRepositorySupport;

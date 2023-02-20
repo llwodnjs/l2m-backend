@@ -6,13 +6,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.l2m.config.principal.ExtendPrincipal;
 import com.l2m.config.security.JwtProvider;
 import com.l2m.domain.Member;
 import com.l2m.exception.base.NoDataException;
 import com.l2m.model.MemberDto;
 import com.l2m.repository.manager.MemberRepositoryManager;
 import com.l2m.repository.support.MemberRepositorySupport;
+import com.l2m.util.global.HttpRequestUtil;
 import com.l2m.util.global.RandomGenerator;
+import com.l2m.util.global.SessionUtil;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -63,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     // 토큰 팔행
-    String token = jwtProvider.createToken(member.getBusinessKey(), member.getRoles());
+    String token = jwtProvider.createToken(member.getUsername(), member.getRoles());
 
     return new MemberDto.login(member, token);
   }
@@ -72,6 +75,10 @@ public class MemberServiceImpl implements MemberService {
   public MemberDto.findPw findPw(MemberDto.findPwParam findPwParam) {
     final String name = findPwParam.getName(),          // 이름
                 username = findPwParam.getUsername();   // 아이디
+
+    // jwtProvider.resolveToken(HttpRequestUtil.getRequest());
+
+    // final ExtendPrincipal principal = SessionUtil.getSession();
 
     // 이름, 아이디로 회원정보 조회
     final Member member = memberRepositorySupport.findByNameAndUsername(name, username)

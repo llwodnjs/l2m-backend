@@ -70,7 +70,7 @@ public class Authority extends BaseEntity {
     public static Supplier<Authority> createAuth(Member member) {
         final Authority authority = Authority.builder()
                                             .businessKey(BusinessKeyUtil.create(DomainPrefix.AUTH))
-                                            .name("USER")
+                                            .name("ROLE_USER")
                                             .member(member)
                                             .build();
         return () -> authority;
