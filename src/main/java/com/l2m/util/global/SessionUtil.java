@@ -1,9 +1,10 @@
 package com.l2m.util.global;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.l2m.config.principal.ExtendPrincipal;
+import com.l2m.model.CustomUserDetails;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class SessionUtil {
 	 * 
 	 * @return
 	 */
-	public static ExtendPrincipal getSession() {
+	public static CustomUserDetails getSession() {
 		/**
 		 * 3가지 타입이 있음
 		 * getContext()까지만 있고 인증 주체자체가 없는 경우
@@ -35,7 +36,7 @@ public class SessionUtil {
 		 */
 		final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		return authentication == null ? new ExtendPrincipal() : (ExtendPrincipal) authentication.getPrincipal();
+		return authentication.getClass().isAssignableFrom(AnonymousAuthenticationToken.class) ? new CustomUserDetails() : (CustomUserDetails) authentication.getPrincipal();
 	}
 
 }

@@ -3,7 +3,6 @@ package com.l2m.model;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,8 +12,10 @@ import com.l2m.domain.Authority;
 import com.l2m.domain.Member;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails(Member member) {
@@ -29,17 +30,17 @@ public class CustomUserDetails implements UserDetails {
         this.authorities = Arrays.asList(new SimpleGrantedAuthority(member.getRoles().get(0).getName()));
     }
 
-    private Long id;
+    private Long id = -1L;
 
-    private String businessKey;
+    private String businessKey = "anonymous";
     
-    private String username;
+    private String username = "anonymous";
     
-    private String name;
+    private String name = "anonymous";
 
-    private String password;
+    private String password = "";
 
-    private Character isFindPw;
+    private Character isFindPw = 'N';
 
     private List<Authority> roles;
 
