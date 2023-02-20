@@ -22,4 +22,11 @@ public interface MemberService {
    * @return
    */
   public MemberDto.findPw findPw(MemberDto.findPwParam findPwParam);
+
+  /**
+   * 내 정보 확인
+   * @param confirmInfoParam
+   * @return
+   */
+  public MemberDto.confirmInfo confirmInfo(MemberDto.confirmInfoParam confirmInfoParam);
 }

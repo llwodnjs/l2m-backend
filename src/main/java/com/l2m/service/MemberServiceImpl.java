@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.l2m.config.security.JwtProvider;
 import com.l2m.domain.Member;
 import com.l2m.exception.base.NoDataException;
-import com.l2m.model.CustomUserDetails;
 import com.l2m.model.MemberDto;
 import com.l2m.repository.manager.MemberRepositoryManager;
 import com.l2m.repository.support.MemberRepositorySupport;
@@ -87,5 +86,22 @@ public class MemberServiceImpl implements MemberService {
     final String changePw = RandomGenerator.randomStringMaker(10);
     
     return memberRepositoryManager.findPw(member, changePw);
+  }
+
+  @Override
+  public MemberDto.confirmInfo confirmInfo(MemberDto.confirmInfoParam confirmInfoParam) {
+    final String name = confirmInfoParam.getUsername(),          // 아이디
+                password = confirmInfoParam.getPassword();   // 비밀번호
+
+    // SessionUtil.getSession();
+    // 회원 정보
+    final Member member = memberRepositorySupport.findByUsername(name)
+    .orElseThrow(() -> new UsernameNotFoundException("아이디 또는 비밀번호가 맞지 않습니다."));
+              
+    // 패스워드 확인
+    if (!passwordEncoder.matches(password, member.getPassword())) {
+      throw new BadCredentialsException("아이디 또는 비밀번호가 맞지 않습니다.");
+    }
+    return new MemberDto.confirmInfo(member);
   }
 }

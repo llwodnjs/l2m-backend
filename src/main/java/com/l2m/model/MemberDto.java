@@ -113,4 +113,35 @@ public class MemberDto {
     @Schema(description = "아이디")
     private String username;
   }
+
+  /**
+   * 내 정보 확인 파라미터
+   */
+  @Getter
+  @Setter
+  public static class confirmInfoParam {
+    @Schema(description = "이름")
+    private String username;
+    
+    @Schema(description = "비밀번호")
+    private String password;
+  }
+
+  /**
+   * 내 정보 확인 반환객체
+   */
+  @Getter
+  @Setter
+  public static class confirmInfo {
+    @Schema(description = "아이디")
+    private String username;
+
+    @Schema(description = "이름")
+    private String name;
+
+    public confirmInfo(Member member) {
+      this.username = member.getUsername();
+      this.name = member.getName();
+    }
+  }
 }
