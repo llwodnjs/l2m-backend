@@ -15,4 +15,11 @@ public interface MemberService {
    * @param loginParam
    */
   public MemberDto.login login(MemberDto.loginParam loginParam);
+
+  /**
+   * 비밀번호 찾기
+   * @param findPwParam
+   * @return
+   */
+  public MemberDto.findPw findPw(MemberDto.findPwParam findPwParam);
 }

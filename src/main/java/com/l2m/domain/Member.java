@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.l2m.domain.base.enums.DomainPrefix;
 import com.l2m.domain.global.BaseEntity;
 import com.l2m.model.MemberDto;
@@ -52,6 +54,11 @@ public class Member extends BaseEntity {
   @Column
   private String password;
 
+  // 비밀번호 찾기 여부
+  @Column
+  @ColumnDefault(value = "'N'")
+  private Character isFindPw;
+
   @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
   private List<Authority> roles = new ArrayList<>();
 
@@ -72,16 +79,18 @@ public class Member extends BaseEntity {
    * @param username
    * @param name
    * @param password
+   * @param isFindPw
    */
   protected Member(String createUserKey, LocalDateTime createDateTime, String updateUserKey,
       LocalDateTime updateDateTime,
-      Long id, String businessKey, String username, String name, String password) {
+      Long id, String businessKey, String username, String name, String password, Character isFindPw) {
     super(createUserKey, createDateTime, updateUserKey, updateDateTime);
     this.id = id;
     this.businessKey = businessKey;
     this.username = username;
     this.name = name;
     this.password = password;
+    this.isFindPw = isFindPw;
   }
 
   /**
@@ -95,6 +104,7 @@ public class Member extends BaseEntity {
     this.username = member.getUsername();
     this.name = member.getName();
     this.password = member.getPassword();
+    this.isFindPw = member.getIsFindPw();
   }
 
   /**
@@ -120,5 +130,16 @@ public class Member extends BaseEntity {
     final Member member = new Member(joinParam, passwordEncoder);
     member.roles.add(Authority.createAuth(member).get());
     return () -> member;
+  }
+
+  /**
+   * 비밀번호 찾기
+   * 
+   * @param findPw
+   * @param passwordEncoder
+   */
+  public void findPw(String changePw, Function<String, String> passwordEncoder) {
+    this.password = passwordEncoder.apply(changePw);
+    this.isFindPw = 'Y';
   }
 }

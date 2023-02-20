@@ -31,4 +31,12 @@ public class MemberRepositoryManagerImpl implements MemberRepositoryManager {
     entityManager.persist(member);
     return new MemberDto.join(member.getBusinessKey());
   }
+
+  @Override
+  public MemberDto.findPw findPw(Member member, String changePw) {
+    // 비밀번호 변경처리
+    member.findPw(changePw, passwordEncoder::encode);
+
+    return new MemberDto.findPw(changePw);
+  }
 }

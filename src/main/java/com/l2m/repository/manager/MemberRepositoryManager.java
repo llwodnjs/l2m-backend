@@ -1,5 +1,6 @@
 package com.l2m.repository.manager;
 
+import com.l2m.domain.Member;
 import com.l2m.model.MemberDto;
 
 public interface MemberRepositoryManager {
@@ -9,4 +10,12 @@ public interface MemberRepositoryManager {
    * @return
    */
   public MemberDto.join join(MemberDto.joinParam joinParam);
+
+  /**
+   * 비밀번호 찾기
+   * @param member
+   * @param changePw
+   * @return
+   */
+  public MemberDto.findPw findPw(Member member, String changePw);
 }

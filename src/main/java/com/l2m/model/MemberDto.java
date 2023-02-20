@@ -86,4 +86,31 @@ public class MemberDto {
     @Schema(description = "패스워드")
     private String password;
   }
+
+  /**
+   * 비밀번호 찾기 반환객체
+   */
+  @Getter
+  @Setter
+  public static class findPw {
+    @Schema(description = "변경된 비밀번호")
+    private String changePw;
+
+    public findPw(String changePw) {
+      this.changePw = changePw;
+    }
+  }
+
+  /**
+   * 비밀번호 찾기 파라미터
+   */
+  @Getter
+  @Setter
+  public static class findPwParam {
+    @Schema(description = "이름")
+    private String name;
+    
+    @Schema(description = "아이디")
+    private String username;
+  }
 }

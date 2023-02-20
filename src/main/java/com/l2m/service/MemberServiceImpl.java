@@ -12,6 +12,7 @@ import com.l2m.exception.base.NoDataException;
 import com.l2m.model.MemberDto;
 import com.l2m.repository.manager.MemberRepositoryManager;
 import com.l2m.repository.support.MemberRepositorySupport;
+import com.l2m.util.global.RandomGenerator;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +66,20 @@ public class MemberServiceImpl implements MemberService {
     String token = jwtProvider.createToken(member.getBusinessKey(), member.getRoles());
 
     return new MemberDto.login(member, token);
+  }
+
+  @Override
+  public MemberDto.findPw findPw(MemberDto.findPwParam findPwParam) {
+    final String name = findPwParam.getName(),          // 이름
+                username = findPwParam.getUsername();   // 아이디
+
+    // 이름, 아이디로 회원정보 조회
+    final Member member = memberRepositorySupport.findByNameAndUsername(name, username)
+                            .orElseThrow(() -> new NoDataException("회원이 존재하지 않습니다."));
+
+    // 랜덤값 10자리 포맷의 패스워드 임시 생성
+    final String changePw = RandomGenerator.randomStringMaker(10);
+    
+    return memberRepositoryManager.findPw(member, changePw);
   }
 }

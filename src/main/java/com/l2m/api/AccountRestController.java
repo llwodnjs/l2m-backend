@@ -1,6 +1,8 @@
 package com.l2m.api;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,4 +40,11 @@ public class AccountRestController {
   public MemberDto.login login(@RequestBody final MemberDto.loginParam loginParam) {
     return memberService.login(loginParam);
   }
+
+  @Operation(summary = "비밀번호 찾기")
+  @GetMapping(value = "/findPw")
+  public MemberDto.findPw findPw(@ModelAttribute final MemberDto.findPwParam findPwParam) {
+    return memberService.findPw(findPwParam);
+  }
+
 }
