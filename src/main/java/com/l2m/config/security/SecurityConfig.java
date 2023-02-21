@@ -1,7 +1,6 @@
 package com.l2m.config.security;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +31,14 @@ public class SecurityConfig {
 
   private final JwtProvider jwtProvider;
 
+  private final static String[] noAuthCheckUrls = {
+    "/swagger-ui.html**",
+    "/webjars/springfox-swagger-ui/**",
+    "/swagger-resources/**",
+    "/v2/api-docs",
+    "/account/**"
+  };
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
@@ -60,40 +67,40 @@ public class SecurityConfig {
         // 조건별로 요청 허용/제한 설정
         .authorizeRequests()
         // 회원가입과 로그인은 모두 승인
-        .antMatchers("/account/**").permitAll()
+        .antMatchers(noAuthCheckUrls).permitAll()
         // /admin으로 시작하는 요청은 ADMIN 권한이 있는 유저에게만 허용
         // .antMatchers("/admin/**").hasRole("ADMIN")
         // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
         .antMatchers("/user/**").hasRole("USER")
         .antMatchers("/member/**").permitAll() // 임시 권한 허용
-        .anyRequest().denyAll()
+        // .anyRequest().denyAll()
         .and()
         // JWT 인증 필터 적용
-        .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
         // 에러 핸들링
-        .exceptionHandling()
-        .accessDeniedHandler(new AccessDeniedHandler() {
-          @Override
-          public void handle(HttpServletRequest request, HttpServletResponse response,
-              AccessDeniedException accessDeniedException) throws IOException, ServletException {
-            // 권한 문제가 발생했을 때 이 부분을 호출한다.
-            response.setStatus(403);
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("text/html; charset=UTF-8");
-            response.getWriter().write("권한이 없는 사용자입니다.");
-          }
-        })
-        .authenticationEntryPoint(new AuthenticationEntryPoint() {
-          @Override
-          public void commence(HttpServletRequest request, HttpServletResponse response,
-              AuthenticationException authException) throws IOException, ServletException {
-            // 인증문제가 발생했을 때 이 부분을 호출한다.
-            response.setStatus(401);
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("text/html; charset=UTF-8");
-            response.getWriter().write("인증되지 않은 사용자입니다.");
-          }
-        });
+        // .exceptionHandling()
+        // .accessDeniedHandler(new AccessDeniedHandler() {
+        //   @Override
+        //   public void handle(HttpServletRequest request, HttpServletResponse response,
+        //       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        //     // 권한 문제가 발생했을 때 이 부분을 호출한다.
+        //     response.setStatus(403);
+        //     response.setCharacterEncoding("utf-8");
+        //     response.setContentType("text/html; charset=UTF-8");
+        //     response.getWriter().write("권한이 없는 사용자입니다.");
+        //   }
+        // })
+        // .authenticationEntryPoint(new AuthenticationEntryPoint() {
+        //   @Override
+        //   public void commence(HttpServletRequest request, HttpServletResponse response,
+        //       AuthenticationException authException) throws IOException, ServletException {
+        //     // 인증문제가 발생했을 때 이 부분을 호출한다.
+        //     response.setStatus(401);
+        //     response.setCharacterEncoding("utf-8");
+        //     response.setContentType("text/html; charset=UTF-8");
+        //     response.getWriter().write("인증되지 않은 사용자입니다.");
+        //   }
+        // });
 
     return http.build();
   }
