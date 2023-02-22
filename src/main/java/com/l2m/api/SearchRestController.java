@@ -1,6 +1,6 @@
 package com.l2m.api;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class SearchRestController {
   
   @Operation(summary = "최저가 조회")
   @GetMapping(value = "/lowPriceSearch")
-  private Map<String, Object> lowPriceSearch(@ModelAttribute final SearchDto.lowPriceSearchParam lowPriceSearchParam) {
+  private List<SearchDto.itemListInfo> lowPriceSearch(@ModelAttribute final SearchDto.lowPriceSearchParam lowPriceSearchParam) {
     return searchService.lowPriceSearch(lowPriceSearchParam);
   }
 }

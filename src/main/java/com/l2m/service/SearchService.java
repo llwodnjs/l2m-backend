@@ -1,6 +1,6 @@
 package com.l2m.service;
 
-import java.util.Map;
+import java.util.List;
 
 import com.l2m.model.SearchDto;
 
@@ -11,6 +11,6 @@ public interface SearchService {
    * @param lowPriceSearchParam
    * @return
    */
-  Map<String, Object> lowPriceSearch(SearchDto.lowPriceSearchParam lowPriceSearchParam);
+  List<SearchDto.itemListInfo> lowPriceSearch(SearchDto.lowPriceSearchParam lowPriceSearchParam);
   
 }

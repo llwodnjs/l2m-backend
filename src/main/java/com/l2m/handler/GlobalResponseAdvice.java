@@ -2,6 +2,7 @@ package com.l2m.handler;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import org.springframework.core.MethodParameter;
@@ -33,6 +34,7 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
 
   // 별도로 매핑안하고 그대로 내보내고 싶은 애들
   private final List<Class<?>> notAllowedFilter = Arrays.asList(
+    Map.class,
     ResponseBodyModel.object.class,
     ResponseBodyModel.collection.class,
     ResponseEntity.class,

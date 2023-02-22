@@ -2,7 +2,9 @@ package com.l2m.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
@@ -24,35 +26,12 @@ public class SearchDto {
   @Getter
   @Setter
   public static class lowPriceSearch {
-    @Schema(description = "평균가")
-    private BigDecimal avg_unit_price;
+    @Schema(description = "결과값")
+    private Map<String, Object> resultMap = new LinkedHashMap<>();
 
-    @Schema(description = "강화 수치")
-    private Integer enchant_level;
-
-    @Schema(description = "등급 코드")
-    private String grade;
-
-    @Schema(description = "이미지 url")
-    private String image;
-
-    @Schema(description = "아이템 PK")
-    private Long item_id;
-
-    @Schema(description = "아이템 명")
-    private String item_name;
-
-    @Schema(description = "현 최저가")
-    private BigDecimal now_min_unit_price;
-
-    @Schema(description = "서버 ID")
-    private Integer server_id;
-
-    @Schema(description = "서버명")
-    private String server_name;
-
-    @Schema(description = "월드여부")
-    private Boolean world;
+    public lowPriceSearch(Map<String, Object> resultMap) {
+      this.resultMap = resultMap;
+    }
   }
 
   /**
@@ -72,10 +51,6 @@ public class SearchDto {
 
     @Schema(description = "강화수치")
     private Integer from_enchant_level;
-
-    @Schema(description = "판매여부")
-    private Boolean sale;
-
   }
 
   /**
@@ -233,4 +208,5 @@ public class SearchDto {
     @Schema(description = "카테고리 명")
     private String tradeCategoryName;
   }
+
 }
