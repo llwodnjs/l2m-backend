@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
+import com.l2m.domain.ItemInfo;
 import com.l2m.domain.QItemInfo;
 import com.l2m.domain.base.enums.ItemEnum;
 import com.l2m.model.SearchDto;
@@ -49,6 +50,40 @@ public class ItemInfoRepositorySupportImpl implements ItemInfoRepositorySupport 
                             , itemInfo.tradeCategoryName
                           )
                           // .limit(5L)
+                          .fetch();
+  }
+
+  @Override
+  public ItemInfo findById(Long itemId) {
+    final QItemInfo itemInfo = QItemInfo.itemInfo;
+
+    final BooleanExpression isItemId = itemInfo.itemId.eq(itemId);
+
+    return jpaQueryFactory.select(itemInfo)
+                          .from(itemInfo)
+                          .where(
+                            isItemId
+                          )
+                          .fetchFirst();
+  }
+
+  @Override
+  public List<ItemInfo> findByItemTypeAndName(SearchDto.changePopListParam changePopListParam) {
+    final QItemInfo itemInfo = QItemInfo.itemInfo;
+    final String itemName = changePopListParam.getSearchKeyword(),    // 아이템 명
+                classId = changePopListParam.getClassId(),            // 클래스 명
+                itemType = changePopListParam.getItemType();          // 카테고리 명
+
+    final BooleanExpression isItemName = itemInfo.itemName.contains(itemName);
+    // 무기 일땐 클래스로 조건검
+    final BooleanExpression isItemType = "weapon".equals(itemType) ? itemInfo.tradeCategoryName.eq(classId):itemInfo.tradeCategoryName.eq(ItemEnum.getItemEnum(itemType).getTradeCategoryName());
+
+    return jpaQueryFactory.select(itemInfo)
+                          .from(itemInfo)
+                          .where(
+                            isItemName,
+                            isItemType
+                          )
                           .fetch();
   }
 }

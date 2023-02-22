@@ -6,6 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.l2m.model.global.PageModel;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -207,6 +209,42 @@ public class SearchDto {
 
     @Schema(description = "카테고리 명")
     private String tradeCategoryName;
+  }
+
+  /**
+   * 아이템 교체 팝업 리스트 반환
+   */
+  @Getter
+  @Setter
+  public static class changePopList extends SearchDto.itemListInfo {
+  }
+
+  /**
+   * 아이템 교체 팝업 리스트 조회
+   */
+  @Getter
+  @Setter
+  public static class changePopListParam extends PageModel {
+    @Schema(description = "아이템 PK")
+    private Integer itemId;
+
+    @Schema(description = "카테고리 명")
+    private String itemType;
+
+    @Schema(description = "서버 ID")
+    private Integer serverId;
+
+    @Schema(description = "클래스 코드")
+    private String classId;
+
+    @Schema(description = "등급 코드")
+    private String gradeId;
+
+    @Schema(description = "강화수치")
+    private Integer enchantLevel;
+
+    @Schema(description = "아이템 명")
+    private String searchKeyword;
   }
 
 }

@@ -25,7 +25,7 @@ public class PageModel {
   @Positive(message = "페이지번호는 양수 값이어야 합니다.")
   protected int page;
 
-  @Schema(description = "한 페이지당 사이즈 (기본값 20)", example = "20")
+  @Schema(description = "한 페이지당 사이즈 (기본값 10)", example = "10")
   @Positive(message = "페이지 사이즈는 양수 값이어야 합니다.")
   protected int size;
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.l2m.model.SearchDto;
 import com.l2m.service.SearchService;
+import com.querydsl.core.QueryResults;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +29,13 @@ public class SearchRestController {
   
   @Operation(summary = "최저가 조회")
   @GetMapping(value = "/lowPriceSearch")
-  private List<SearchDto.itemListInfo> lowPriceSearch(@ModelAttribute final SearchDto.lowPriceSearchParam lowPriceSearchParam) {
+  public List<SearchDto.itemListInfo> lowPriceSearch(@ModelAttribute final SearchDto.lowPriceSearchParam lowPriceSearchParam) {
     return searchService.lowPriceSearch(lowPriceSearchParam);
+  }
+
+  @Operation(summary = "아이템 교체 팝업 리스트 조회")
+  @GetMapping(value = "/changePopList")
+  public QueryResults<SearchDto.itemListInfo> changePopList(@ModelAttribute final SearchDto.changePopListParam changePopListParam) {
+    return searchService.changePopList(changePopListParam);
   }
 }

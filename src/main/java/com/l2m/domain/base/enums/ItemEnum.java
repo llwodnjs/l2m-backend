@@ -32,4 +32,11 @@ public enum ItemEnum {
 
   private String tradeCategoryName;
   private String type;
+
+  public static ItemEnum getItemEnum(String type) {
+    for (ItemEnum itemEnum : ItemEnum.values()) {
+      if (itemEnum.getType().equals(type)) return itemEnum;
+    }
+    return null;
+  }
 }

@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.l2m.domain.ItemInfo;
 import com.l2m.domain.base.enums.ItemEnum;
 import com.l2m.model.SearchDto;
 import com.l2m.repository.support.ItemInfoRepositorySupport;
 import com.l2m.util.L2mApiUtil;
 import com.l2m.util.global.IsNullUtil;
+import com.querydsl.core.QueryResults;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -93,5 +95,34 @@ public class SearchServiceImpl implements SearchService {
 
     // 3. 만들어진 데이터 세팅하여 반환
     return resultList;
+  }
+
+  @Override
+  public QueryResults<SearchDto.itemListInfo> changePopList(SearchDto.changePopListParam changePopListParam) {
+    // 반환용 리스트
+    final List<SearchDto.itemListInfo> resultList = new ArrayList<>();
+
+    // itemInfo 테이블에서 아이템 정보 조회해옴.
+    final List<ItemInfo> itemInfoList = itemInfoRepositorySupport.findByItemTypeAndName(changePopListParam);
+    
+    try {
+      for (ItemInfo itemInfo : itemInfoList) {
+        // 2. 받아온 리스트의 item_id기준으로 l2m 리스트 api 호출
+        List<SearchDto.itemListInfo> result = L2mApiUtil.getItemList(changePopListParam.getServerId(),
+                                          itemInfo.getItemName(),
+                                          changePopListParam.getEnchantLevel(),
+                                          ItemEnum.getItemEnum(changePopListParam.getItemType()));
+        
+        resultList.addAll(result);
+      }
+    } catch(IOException e) {
+
+    }
+    return new QueryResults<>(
+      resultList, 
+      (long) changePopListParam.makePageable().getPageSize(), 
+      (long) changePopListParam.getPage(), 
+      resultList.size()
+    );
   }
 }
