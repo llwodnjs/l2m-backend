@@ -13,7 +13,10 @@ public enum DomainPrefix {
   SYSTEM("SYS", "System Default Prefix", "널을 대신하는 기본값. 시스템에서 자동입력된 임의값임을 알림."),
   GLOBAL("GGG", "Global Business", "글로벌"),
   MEMBER("MEM", "Member", "회원 비즈니스 키"),
-  AUTH("AUT", "Auth", "회원 권한")
+  FILE("FIL", "File", "세팅 저장 파일"),
+  AUTH("AUT", "Auth", "회원 권한"),
+  MYSETTING("MYS", "My Setting", "나의 세팅"),
+  SETTINGITEM("SIT", "Setting Item", "나의 세팅 아이템 정보")
   ;
 
   /**

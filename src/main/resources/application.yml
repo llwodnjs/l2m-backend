@@ -41,7 +41,7 @@ jwt:
 
 # 경로 관련
 filepath:
-  dir: '/'
+  root: "/Users/ijaewon"
   contentDir: "/data/files/"
   thumbnailContentDir: "/data/images/"
 
