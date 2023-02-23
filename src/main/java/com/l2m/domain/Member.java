@@ -142,4 +142,14 @@ public class Member extends BaseEntity {
     this.password = passwordEncoder.apply(changePw);
     this.isFindPw = 'Y';
   }
+
+  /**
+   * 내 정보 수정
+   * 
+   * @param password
+   * @param passwordEncoder
+   */
+  public void editInfo(String password, Function<String, String> passwordEncoder) {
+    this.password = passwordEncoder.apply(password);
+  }
 }

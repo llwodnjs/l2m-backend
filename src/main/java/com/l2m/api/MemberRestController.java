@@ -35,5 +35,11 @@ public class MemberRestController {
     return memberService.confirmInfo(confirmInfoParam);
   }
 
+  @Operation(summary = "내 정보 확인")
+  @GetMapping(value = "/editInfo")
+  public MemberDto.editInfo editInfo(@ModelAttribute final MemberDto.editInfoParam editInfoParam) {
+    return memberService.editInfo(editInfoParam);
+  }
+
   
 }

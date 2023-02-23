@@ -104,4 +104,20 @@ public class MemberServiceImpl implements MemberService {
     }
     return new MemberDto.confirmInfo(member);
   }
+
+  @Override
+  public MemberDto.editInfo editInfo(MemberDto.editInfoParam editInfoParam) {
+    final String username = editInfoParam.getUsername();
+
+    // 비밀번호와 비밀번호 확인란 체크
+    if (!editInfoParam.getPassword().equals(editInfoParam.getRePassword())){
+      throw new BadCredentialsException("비밀번호와 확인 비밀번호가 맞지 않습니다.");
+    }
+
+    // 회원 찾아오기
+    final Member member = memberRepositorySupport.findByUsername(username)
+    .orElseThrow(() -> new NoDataException("회원 정보가 올바르지 않습니다."));
+
+    return memberRepositoryManager.editInfo(member, editInfoParam.getPassword());
+  }
 }

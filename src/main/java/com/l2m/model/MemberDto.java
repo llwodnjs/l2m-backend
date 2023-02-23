@@ -144,4 +144,35 @@ public class MemberDto {
       this.name = member.getName();
     }
   }
+
+  /**
+   * 내 정보 수정 파라미터
+   */
+  @Getter
+  @Setter
+  public static class editInfoParam {
+    @Schema(description = "아이디")
+    private String username;
+
+    @Schema(description = "비밀번호")
+    private String password;
+
+    @Schema(description = "비밀번호 확인")
+    private String rePassword;
+  }
+
+  /**
+   * 내 정보 수정 반환
+   */
+  @Getter
+  @Setter
+  public static class editInfo {
+    @Schema(description = "회원 key")
+    private String memberKey;
+
+    public editInfo(String memberKey) {
+      this.memberKey = memberKey;
+    }
+  }
+
 }

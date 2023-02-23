@@ -18,4 +18,12 @@ public interface MemberRepositoryManager {
    * @return
    */
   public MemberDto.findPw findPw(Member member, String changePw);
+
+  /**
+   * 내 정보 수정
+   * @param member
+   * @param editInfo
+   * @return
+   */
+  public MemberDto.editInfo editInfo(Member member, String password);
 }

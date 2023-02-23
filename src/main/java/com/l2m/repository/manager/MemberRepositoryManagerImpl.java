@@ -39,4 +39,12 @@ public class MemberRepositoryManagerImpl implements MemberRepositoryManager {
 
     return new MemberDto.findPw(changePw);
   }
+
+  @Override
+  public MemberDto.editInfo editInfo(Member member, String password) {
+    // 내정보 수정처리
+    member.editInfo(password, passwordEncoder::encode);
+
+    return new MemberDto.editInfo(member.getBusinessKey());
+  }
 }

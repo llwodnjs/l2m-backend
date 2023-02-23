@@ -29,4 +29,11 @@ public interface MemberService {
    * @return
    */
   public MemberDto.confirmInfo confirmInfo(MemberDto.confirmInfoParam confirmInfoParam);
+
+  /**
+   * 내 정보 수정
+   * @param editInfoParam
+   * @return
+   */
+  public MemberDto.editInfo editInfo(MemberDto.editInfoParam editInfoParam);
 }
