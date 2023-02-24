@@ -2,6 +2,8 @@ package com.l2m.api;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.l2m.model.MySettingDto;
 import com.l2m.service.MySettingService;
+import com.querydsl.core.QueryResults;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,5 +45,11 @@ public class MySettingRestController {
   @PostMapping(value = "/insert")
   public MySettingDto.insert insert(@RequestBody MySettingDto.insertParam insertParam) {
     return mySettingService.insert(insertParam);
+  }
+
+  @Operation(description = "나의 세팅 리스트")
+  @GetMapping(value = "/list")
+  public QueryResults<MySettingDto.list> list(@ModelAttribute MySettingDto.listParam listParam) {
+    return mySettingService.list(listParam);
   }
 }

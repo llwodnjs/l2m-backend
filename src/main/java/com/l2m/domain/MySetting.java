@@ -38,6 +38,10 @@ public class MySetting extends BaseEntity implements BaseFunction<MySetting> {
   @Column
   private String businessKey;
 
+  // 회원 비즈니스 키
+  @Column
+  private String memberKey;
+
   // 서버 id
   @Column
   private Integer serverId;
@@ -74,6 +78,7 @@ public class MySetting extends BaseEntity implements BaseFunction<MySetting> {
    * @param updateDateTime
    * @param id
    * @param businessKey
+   * @param memberKey
    * @param serverId
    * @param classId
    * @param gradeId
@@ -83,11 +88,13 @@ public class MySetting extends BaseEntity implements BaseFunction<MySetting> {
    * @param totalPrice
    */
   protected MySetting(String createUserKey, LocalDateTime createDateTime, String updateUserKey,
-      LocalDateTime updateDateTime, Long id, String businessKey, Integer serverId, String classId, String gradeId,
+      LocalDateTime updateDateTime, Long id, String businessKey, String memberKey, Integer serverId, String classId,
+      String gradeId,
       Integer fromEnchantLevel, String settingName, String fileUrl, BigDecimal totalPrice) {
     super(createUserKey, createDateTime, updateUserKey, updateDateTime);
     this.id = id;
     this.businessKey = businessKey;
+    this.memberKey = memberKey;
     this.serverId = serverId;
     this.classId = classId;
     this.gradeId = gradeId;
@@ -104,6 +111,7 @@ public class MySetting extends BaseEntity implements BaseFunction<MySetting> {
     super(mySetting.getCreateUserKey(), mySetting.getCreateDateTime(), mySetting.getUpdateUserKey(),
         mySetting.getUpdateDateTime());
     this.businessKey = mySetting.getBusinessKey();
+    this.memberKey = mySetting.getMemberKey();
     this.serverId = mySetting.getServerId();
     this.classId = mySetting.getClassId();
     this.gradeId = mySetting.getGradeId();
@@ -141,6 +149,7 @@ public class MySetting extends BaseEntity implements BaseFunction<MySetting> {
     this.createUserKey = SessionUtil.getSession().getBusinessKey();
     this.updateUserKey = SessionUtil.getSession().getBusinessKey();
     this.businessKey = BusinessKeyUtil.create(DomainPrefix.MYSETTING);
+    this.memberKey = SessionUtil.getSession().getBusinessKey();
     this.serverId = insertParam.getServerId();
     this.classId = insertParam.getClassId();
     this.gradeId = insertParam.getGradeId();

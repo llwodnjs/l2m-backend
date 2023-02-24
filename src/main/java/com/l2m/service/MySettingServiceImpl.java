@@ -9,8 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.l2m.domain.MySetting;
 import com.l2m.domain.SettingFiles;
+import com.l2m.exception.base.NoDataException;
 import com.l2m.model.MySettingDto;
 import com.l2m.repository.manager.MySettingRepositoryManager;
+import com.l2m.repository.support.MemberRepositorySupport;
+import com.l2m.repository.support.MySettingRepositorySupport;
+import com.l2m.util.global.SessionUtil;
+import com.querydsl.core.QueryResults;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +30,15 @@ public class MySettingServiceImpl implements MySettingService {
 
   @Value("${filepath.contentDir}")
   private String contentDir;
+
+  @NonNull
+  private MySettingRepositorySupport mySettingRepositorySupport;
   
   @NonNull
   private MySettingRepositoryManager mySettingRepositoryManager;
+
+  @NonNull
+  private MemberRepositorySupport memberRepositorySupport;
   
   @Override
   public MySettingDto.fileInsert fileInsert(MultipartFile file) {
@@ -50,5 +61,15 @@ public class MySettingServiceImpl implements MySettingService {
     }
 
     return new MySettingDto.insert(mySettingKey);
+  }
+
+  @Override
+  public QueryResults<MySettingDto.list> list(MySettingDto.listParam listParam) {
+    final String sessionMemberKey = SessionUtil.getSession().getBusinessKey();
+
+    // 세션 회원 정보 조회
+    memberRepositorySupport.findByBusinessKey(sessionMemberKey)
+      .orElseThrow(() -> new NoDataException("회원정보가 존재하지 않습니다."));
+    return mySettingRepositorySupport.list(listParam, sessionMemberKey);
   }
 }

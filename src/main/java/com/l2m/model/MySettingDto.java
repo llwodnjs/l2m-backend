@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.l2m.domain.MySetting;
+import com.l2m.model.global.PageModel;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -139,5 +142,42 @@ public class MySettingDto {
       this.path = path;
       this.size = size;
     }
+  }
+
+  /**
+   * 나의 세팅 리스트 조회 반환
+   */
+  @Getter
+  @Setter
+  public static class list {
+    
+    @Schema(description = "세팅 비즈니스 키")
+    private String mySettingKey;
+    
+    @Schema(description = "파일 url")
+    private String imageUrl;
+    
+    @Schema(description = "세팅명")
+    private String settingName;
+    
+    @Schema(description = "세팅 total price")
+    private BigDecimal totalPrice;
+
+    public list(MySetting mySetting) {
+      this.mySettingKey = mySetting.getBusinessKey();
+      this.imageUrl = mySetting.getFileUrl();
+      this.settingName = mySetting.getSettingName();
+      this.totalPrice = mySetting.getTotalPrice();
+    }
+  }
+
+  /**
+   * 나의 세팅 리스트 조회 파라미터
+   */
+  @Getter
+  @Setter
+  public static class listParam extends PageModel {
+    @Schema(description = "세팅명")
+    private String searchKeyword;
   }
 }

@@ -23,11 +23,11 @@ public class PageModel {
 
   @Schema(description = "페이지번호 (기본값 1)", example = "1")
   @Positive(message = "페이지번호는 양수 값이어야 합니다.")
-  protected int page;
+  protected int page = 1;
 
   @Schema(description = "한 페이지당 사이즈 (기본값 10)", example = "10")
   @Positive(message = "페이지 사이즈는 양수 값이어야 합니다.")
-  protected int size;
+  protected int size = 10;
 
   public PageRequest makePageable() {
     //사용은 1로 하고 실제 pageable은 0이 시작이기 때문에 그에 맞춰준다.

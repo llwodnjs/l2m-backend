@@ -19,4 +19,11 @@ public interface MemberRepositorySupport {
    * @return
    */
   Optional<Member> findByNameAndUsername(String name, String username);
+
+  /**
+   * 비즈니스키로 회원조회
+   * @param businessKey
+   * @return
+   */
+  Optional<Member> findByBusinessKey(String businessKey);
 }

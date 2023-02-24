@@ -50,4 +50,16 @@ public class MemberRepositorySupportImpl implements MemberRepositorySupport {
     );
   }
   
+  @Override
+  public Optional<Member> findByBusinessKey(String businessKey) {
+    final QMember member = QMember.member;
+    final BooleanExpression isBusinessKey = member.businessKey.eq(businessKey);
+
+    return Optional.ofNullable(
+      jpaQueryFactory.select(member)
+                      .from(member)
+                      .where(isBusinessKey)
+                      .fetchFirst()
+    );
+  }
 }

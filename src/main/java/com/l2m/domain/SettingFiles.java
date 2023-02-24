@@ -228,7 +228,10 @@ public class SettingFiles extends BaseEntity implements BaseFunction<SettingFile
     this.businessKey = BusinessKeyUtil.create(DomainPrefix.FILE);
     this.root = root + contentDir;
     this.filePath = path;
-    this.fileName = file.getName();
+    this.fileName = new StringBuilder(settingFile.getOriginalFileName())
+                          .append(".")
+                          .append(settingFile.getExtension())
+                          .toString();
     this.originalFileName = settingFile.getOriginalFileName();
     this.storedFileName = settingFile.getReplacedFileName();
     this.fileSize = settingFile.getSize();
@@ -238,7 +241,12 @@ public class SettingFiles extends BaseEntity implements BaseFunction<SettingFile
                             .append(".")
                             .append(settingFile.getExtension())
                             .toString();
-    // this.resourceLink = resourceLink;
+    this.resourceLink = new StringBuilder(path)
+                            .append("/")
+                            .append(this.storedFileName)
+                            .append(".")
+                            .append(settingFile.getExtension())
+                            .toString();
 
   }
 }
