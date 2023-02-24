@@ -38,4 +38,10 @@ public class SearchRestController {
   public QueryResults<SearchDto.itemListInfo> changePopList(@ModelAttribute final SearchDto.changePopListParam changePopListParam) {
     return searchService.changePopList(changePopListParam);
   }
+
+  @Operation(summary = "아이템 정보 팝업 조회")
+  @GetMapping(value = "/getItemInfoPop")
+  public SearchDto.itemInfoPop getItemPopInfo(@ModelAttribute final SearchDto.itemInfoPopParam itemInfoPopParam) {
+    return searchService.getItemPopInfo(itemInfoPopParam);
+  }
 }

@@ -9,10 +9,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.l2m.domain.Favorites;
 import com.l2m.domain.ItemInfo;
+import com.l2m.domain.Member;
 import com.l2m.domain.base.enums.ItemEnum;
+import com.l2m.exception.base.NoDataException;
 import com.l2m.model.SearchDto;
+import com.l2m.repository.support.FavoritesRepositorySupport;
 import com.l2m.repository.support.ItemInfoRepositorySupport;
+import com.l2m.repository.support.MemberRepositorySupport;
 import com.l2m.util.L2mApiUtil;
 import com.l2m.util.global.IsNullUtil;
 import com.querydsl.core.QueryResults;
@@ -32,6 +37,12 @@ public class SearchServiceImpl implements SearchService {
 
   @NonNull
   private ItemInfoRepositorySupport itemInfoRepositorySupport;
+
+  @NonNull
+  private FavoritesRepositorySupport favoritesRepositorySupport;
+
+  @NonNull
+  private MemberRepositorySupport memberRepositorySupport;
 
   @Override
   public List<SearchDto.itemListInfo> lowPriceSearch(SearchDto.lowPriceSearchParam lowPriceSearchParam) {
@@ -124,5 +135,36 @@ public class SearchServiceImpl implements SearchService {
       (long) changePopListParam.getPage(), 
       resultList.size()
     );
+  }
+
+  // 아이템 팝업 정보 조회
+  @Override
+  public SearchDto.itemInfoPop getItemPopInfo(SearchDto.itemInfoPopParam itemInfoPopParam) {
+
+    final Integer itemId = itemInfoPopParam.getItem_id();
+    final Integer serverId = itemInfoPopParam.getServer_id();
+    final Integer enchantLevel = itemInfoPopParam.getEnchant_level();
+    final String username = itemInfoPopParam.getUsername();
+
+    SearchDto.l2mApiItemInfo itemInfoResult = new SearchDto.l2mApiItemInfo();
+    SearchDto.l2mApiPriceInfo itemPriceInfoResult = new SearchDto.l2mApiPriceInfo();
+    Character isFavorite = 'N';
+
+    try {
+      itemInfoResult = L2mApiUtil.getItemInfo(itemId, enchantLevel); // 아이템 정보
+      itemPriceInfoResult = L2mApiUtil.getPriceInfo(itemId, serverId, enchantLevel); // 아이템 가격 정보
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    if (!IsNullUtil.check(username)) {
+      final Member member = memberRepositorySupport.findByUsername(username)
+        .orElseThrow(() -> new NoDataException("회원 정보가 맞지 않습니다."));
+      
+      final Favorites favorites = favoritesRepositorySupport.findFavoritesUsernameAndItemId(member.getBusinessKey(), itemId);
+      isFavorite = IsNullUtil.check(favorites) ? 'N' : 'Y'; // 즐겨찾기 목록에 있다면 Y로 세팅
+    }
+
+    return new SearchDto.itemInfoPop(itemInfoResult, itemPriceInfoResult, isFavorite);
   }
 }

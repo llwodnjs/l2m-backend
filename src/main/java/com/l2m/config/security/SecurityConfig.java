@@ -28,7 +28,8 @@ public class SecurityConfig {
     "/swagger-resources/**",
     "/v3/api-docs/**",
     "/account/**",
-    "/file/**"
+    "/file/**",
+    "/search/**"
   };
 
   private final static String[] memberCheckUrls = {

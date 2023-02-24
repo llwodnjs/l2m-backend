@@ -20,5 +20,11 @@ public interface SearchService {
    * @return
    */
   QueryResults<SearchDto.itemListInfo> changePopList(SearchDto.changePopListParam changePopListParam);
-  
+
+  /**
+   * 아이템 정보 팝업 조회
+   * @param itemInfoPopParam
+   *
+   */
+  SearchDto.itemInfoPop getItemPopInfo(SearchDto.itemInfoPopParam itemInfoPopParam);
 }

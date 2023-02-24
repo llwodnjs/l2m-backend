@@ -43,10 +43,10 @@ public class FavoritesDto {
     @Setter
     public static class controlFavorite {
         @Schema(description = "즐겨찾기 비즈니스키")
-        private String favoriteKey;
+        private Character isFavorite;
 
         public controlFavorite(Favorites favorites) {
-            this.favoriteKey = favorites.getBusinessKey();
+            this.isFavorite = favorites.getIsFavorite();
         }
     }
 

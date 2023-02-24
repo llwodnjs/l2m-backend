@@ -83,7 +83,7 @@ public class L2mApiUtil {
    * 아이템 정보 조회
    * @throws IOException
    */
-  public static SearchDto.l2mApiItemInfo getItemInfo(Long itemId, Integer enchantLevel) throws IOException {
+  public static SearchDto.l2mApiItemInfo getItemInfo(Integer itemId, Integer enchantLevel) throws IOException {
     StringBuilder urlBuilder = new StringBuilder(BASE_URL + itemId); // API URL
     SearchDto.l2mApiItemInfo itemInfo = new SearchDto.l2mApiItemInfo();
     if (!IsNullUtil.check(enchantLevel)) 
@@ -122,5 +122,49 @@ public class L2mApiUtil {
     conn.disconnect();
 
     return itemInfo;
+  }
+
+  public static SearchDto.l2mApiPriceInfo getPriceInfo(Integer itemId, Integer serverId, Integer enchantLevel) throws IOException {
+    StringBuilder urlBuilder = new StringBuilder(BASE_URL + itemId + "/price"); // API URL
+    SearchDto.l2mApiPriceInfo itemPriceInfo = new SearchDto.l2mApiPriceInfo();
+
+    if (!IsNullUtil.check(enchantLevel) & !IsNullUtil.check(serverId)) {
+      urlBuilder.append("?server_id=" + serverId);
+      urlBuilder.append("&enchant_level=" + enchantLevel); // API QueryString
+    }
+    
+    URL url = new URL(urlBuilder.toString());
+
+    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setRequestMethod("GET");
+    conn.setRequestProperty("Content-type", "application/json");
+    conn.setRequestProperty("Authorization", "Bearer " + API_KEY); // 발급받은 API Key 값
+
+    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) { // Response Code가 200인 경우
+      /*
+       * 응답값을 한 줄씩 출력하는 예제 입니다.
+       * 다른 방식으로 결과를 사용하기 원할 경우 json 으로 내려온 응답을 parsing 해서 사용하시면 됩니다.
+       * 응답값은 “문서” 메뉴 하위의 API Schemas 를 참고하세요.
+       */
+
+      BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+      StringBuffer response = new StringBuffer();
+
+      String readLine;
+      while ((readLine = in.readLine()) != null) {
+        response.append(readLine);
+      }
+
+      Gson gson = new GsonBuilder().serializeNulls().create();
+
+      itemPriceInfo = gson.fromJson(response.toString(), SearchDto.l2mApiPriceInfo.class);
+
+      in.close();
+    } else {
+      // do nothing
+    }
+    conn.disconnect();
+
+    return itemPriceInfo;
   }
 }

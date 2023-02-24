@@ -247,4 +247,82 @@ public class SearchDto {
     private String searchKeyword;
   }
 
+  @Getter
+  @Setter
+  public static class l2mApiUnitPriceInfo {
+    
+    @Schema(description = "가격")
+    private BigDecimal unit_price;
+
+    @Schema(description = "매물여부")
+    private boolean world;
+
+  }
+
+  @Getter
+  @Setter
+  public static class l2mApiPriceInfo {
+
+    @Schema(description = "서버 ID")
+    private Integer server_id;
+
+    @Schema(description = "아이템 PK")
+    private Integer item_id;
+
+    @Schema(description = "강화 수치")
+    private Integer enchant_level;
+
+    @Schema(description = "현재 최저가")
+    private SearchDto.l2mApiUnitPriceInfo now;
+
+    @Schema(description = "최저 최저가")
+    private SearchDto.l2mApiUnitPriceInfo min;
+
+    @Schema(description = "최고 최저가")
+    private SearchDto.l2mApiUnitPriceInfo max;
+
+    @Schema(description = "평균 최저가")
+    private SearchDto.l2mApiUnitPriceInfo avg;
+
+    @Schema(description = "마지막 최저가")
+    private SearchDto.l2mApiUnitPriceInfo last;
+  }
+
+  @Getter
+  @Setter
+  public static class itemInfoPop {
+
+    @Schema(description = "아이템 정보")
+    private SearchDto.l2mApiItemInfo itemInfo;
+
+    @Schema(description = "아이템 가격 정보")
+    private SearchDto.l2mApiPriceInfo priceInfo;
+
+    @Schema(description = "즐겨찾기 여부")
+    private Character isFavorite;
+
+    public itemInfoPop(SearchDto.l2mApiItemInfo itemInfo, SearchDto.l2mApiPriceInfo priceInfo, Character isFavorite) {
+      this.itemInfo = itemInfo;
+      this.priceInfo = priceInfo;
+      this.isFavorite = isFavorite;
+    }
+
+  }
+
+  @Getter
+  @Setter
+  public static class itemInfoPopParam {
+    @Schema(description = "서버 ID")
+    private Integer server_id;
+
+    @Schema(description = "아이템 PK")
+    private Integer item_id;
+
+    @Schema(description = "강화 수치")
+    private Integer enchant_level;
+
+    @Schema(description = "회원 아이디")
+    private String username;
+  }
+
 }
