@@ -72,17 +72,22 @@ public class ItemInfoRepositorySupportImpl implements ItemInfoRepositorySupport 
     final QItemInfo itemInfo = QItemInfo.itemInfo;
     final String itemName = changePopListParam.getSearchKeyword(),    // 아이템 명
                 classId = changePopListParam.getClassId(),            // 클래스 명
-                itemType = changePopListParam.getItemType();          // 카테고리 명
+                itemType = changePopListParam.getItemType(),          // 카테고리 명
+                gradeId = changePopListParam.getGradeId();            // 등급
 
     final BooleanExpression isItemName = itemInfo.itemName.contains(itemName);
     // 무기 일땐 클래스로 조건검
-    final BooleanExpression isItemType = "weapon".equals(itemType) ? itemInfo.tradeCategoryName.eq(classId):itemInfo.tradeCategoryName.eq(ItemEnum.getItemEnum(itemType).getTradeCategoryName());
+    final BooleanExpression isItemType = "weapon".equals(itemType) ? itemInfo.tradeCategoryName.eq(classId):
+                                          itemType.contains("ring") ? itemInfo.tradeCategoryName.eq(ItemEnum.RING.getTradeCategoryName())
+                                                                      : itemInfo.tradeCategoryName.eq(ItemEnum.getItemEnum(itemType).getTradeCategoryName());
+    final BooleanExpression isGrade = itemInfo.grade.eq(gradeId);
 
     return jpaQueryFactory.select(itemInfo)
                           .from(itemInfo)
                           .where(
                             isItemName,
-                            isItemType
+                            isItemType,
+                            isGrade
                           )
                           .fetch();
   }

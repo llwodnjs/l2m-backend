@@ -27,4 +27,11 @@ public interface SearchService {
    *
    */
   SearchDto.itemInfoPop getItemPopInfo(SearchDto.itemInfoPopParam itemInfoPopParam);
+
+  /**
+   * 나의 세팅 키로 최저가 조회
+   * @param mySettingLowPriceSearchParam
+   * @return
+   */
+  SearchDto.mySettingLowPriceSearch mySettingLowPriceSearch(SearchDto.mySettingLowPriceSearchParam mySettingLowPriceSearchParam);
 }

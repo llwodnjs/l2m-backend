@@ -33,12 +33,12 @@ public class L2mApiUtil {
    * 아이템 리스트 조회
    * @throws IOException
    */
-  public static List<SearchDto.itemListInfo> getItemList(Integer serverId, String itemName, Integer enchantLevel, ItemEnum itemEnum) throws IOException {
+  public static List<SearchDto.itemListInfo> getItemList(Integer serverId, String itemName, Integer enchantLevel, String tradeCategoryCode) throws IOException {
     StringBuilder urlBuilder = new StringBuilder(BASE_URL + "search"); // API URL
     SearchDto.l2mApiItemList itemList = new SearchDto.l2mApiItemList();
     urlBuilder.append("?server_id=" + serverId); // API QueryString
     // 아이템타입이 무기일때만 강화수치 적용
-    if (itemEnum.equals(ItemEnum.WEAPON)) {
+    if (tradeCategoryCode.equals(ItemEnum.WEAPON.getType())) {
       urlBuilder.append("&from_enchant_level=" + enchantLevel); // API QueryString
     }
     urlBuilder.append("&search_keyword=" + URLEncoder.encode(itemName, "UTF-8")); // API QueryString

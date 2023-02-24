@@ -44,4 +44,10 @@ public class SearchRestController {
   public SearchDto.itemInfoPop getItemPopInfo(@ModelAttribute final SearchDto.itemInfoPopParam itemInfoPopParam) {
     return searchService.getItemPopInfo(itemInfoPopParam);
   }
+
+  @Operation(summary = "나의 세팅 키로 최저가 조회")
+  @GetMapping(value = "/mySettingLowPriceSearch")
+  public SearchDto.mySettingLowPriceSearch mySettingLowPriceSearch(@ModelAttribute final SearchDto.mySettingLowPriceSearchParam mySettingLowPriceSearchParam) {
+    return searchService.mySettingLowPriceSearch(mySettingLowPriceSearchParam);
+  }
 }

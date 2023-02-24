@@ -47,7 +47,7 @@ public class MySettingServiceImpl implements MySettingService {
     // 파일 저장
     final SettingFiles settingFiles = mySettingRepositoryManager.insertFile(file, contentDir, root, path);
 
-    return new MySettingDto.fileInsert(settingFiles.getFullPath());
+    return new MySettingDto.fileInsert(settingFiles.getResourceLink());
   }
 
   @Override

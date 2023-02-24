@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.l2m.domain.MySetting;
+import com.l2m.domain.SettingItem;
 import com.l2m.model.global.PageModel;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -162,12 +163,28 @@ public class MySettingDto {
     
     @Schema(description = "세팅 total price")
     private BigDecimal totalPrice;
+    
+    @Schema(description = "서버 ID")
+    private Integer serverId;
+    
+    @Schema(description = "클래스 ID")
+    private String classId;
+    
+    @Schema(description = "등급 ID")
+    private String gradeId;
+    
+    @Schema(description = "강화수치")
+    private Integer fromEnchantLevel;
 
     public list(MySetting mySetting) {
       this.mySettingKey = mySetting.getBusinessKey();
       this.imageUrl = mySetting.getFileUrl();
       this.settingName = mySetting.getSettingName();
       this.totalPrice = mySetting.getTotalPrice();
+      this.serverId = mySetting.getServerId();
+      this.classId = mySetting.getClassId();
+      this.gradeId = mySetting.getGradeId();
+      this.fromEnchantLevel = mySetting.getFromEnchantLevel();
     }
   }
 
@@ -179,5 +196,27 @@ public class MySettingDto {
   public static class listParam extends PageModel {
     @Schema(description = "세팅명")
     private String searchKeyword;
+  }
+
+  /**
+   * 나의 세팅 아이템 리스트 반환 객체
+   */
+  @Getter
+  @Setter
+  public static class settingItemList {
+    @Schema(description = "아이템 명")
+    private String itemName;
+
+    @Schema(description = "카테고리 코드")
+    private String tradeCategoryCode;
+
+    @Schema(description = "카테고리 명")
+    private String tradeCategoryName;
+
+    public settingItemList(SettingItem settingItem) {
+      this.itemName = settingItem.getItemName();
+      this.tradeCategoryCode = settingItem.getTradeCategoryCode();
+      this.tradeCategoryName = settingItem.getTradeCategoryName();
+    }
   }
 }

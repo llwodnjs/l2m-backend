@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import com.l2m.domain.base.enums.DomainPrefix;
+import com.l2m.domain.base.enums.ItemEnum;
 import com.l2m.domain.global.BaseEntity;
 import com.l2m.domain.global.BaseFunction;
 import com.l2m.model.MySettingDto;
@@ -156,7 +157,7 @@ public class SettingItem extends BaseEntity implements BaseFunction<SettingItem>
     this.updateUserKey = SessionUtil.getSession().getBusinessKey();
     this.businesskey = BusinessKeyUtil.create(DomainPrefix.SETTINGITEM);
     this.settingBusinessKey = mySettingKey;
-    this.tradeCategoryCode = itemInfo.getTradeCategoryName();
+    this.tradeCategoryCode = itemInfo.getTradeCategoryName().contains("반지") ? ItemEnum.RING.getType() : ItemEnum.getType(itemInfo.getTradeCategoryName());
     this.tradeCategoryName = itemInfo.getTradeCategoryName();
     this.itemId = itemInfo.getItem_id();
     this.itemName = itemInfo.getItem_name();

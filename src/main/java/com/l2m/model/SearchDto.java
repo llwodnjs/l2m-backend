@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.l2m.domain.MySetting;
 import com.l2m.model.global.PageModel;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,6 +42,7 @@ public class SearchDto {
    */
   @Getter
   @Setter
+  @NoArgsConstructor
   public static class lowPriceSearchParam {
     @Schema(description = "서버 ID")
     private Integer server_id;
@@ -53,6 +55,13 @@ public class SearchDto {
 
     @Schema(description = "강화수치")
     private Integer from_enchant_level;
+
+    public lowPriceSearchParam(MySetting mySetting) {
+      this.server_id = mySetting.getServerId();
+      this.class_id = mySetting.getClassId();
+      this.grade_id = mySetting.getGradeId();
+      this.from_enchant_level = mySetting.getFromEnchantLevel();
+    }
   }
 
   /**
@@ -325,4 +334,23 @@ public class SearchDto {
     private String username;
   }
 
+  /**
+   * 나의 세팅키로 최저가 조회 반환 객체
+   */
+  @Getter
+  @Setter
+  public static class mySettingLowPriceSearch {
+    @Schema(description = "최저가 리스트")
+    private List<SearchDto.itemListInfo> list;
+  }
+
+  /**
+   * 나의 세팅키로 최저가 조회 파라미터
+   */
+  @Getter
+  @Setter
+  public static class mySettingLowPriceSearchParam {
+    @Schema(description = "나의 세팅 키")
+    private String mySettingKey;
+  }
 }

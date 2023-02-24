@@ -12,12 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.l2m.domain.Favorites;
 import com.l2m.domain.ItemInfo;
 import com.l2m.domain.Member;
+import com.l2m.domain.MySetting;
 import com.l2m.domain.base.enums.ItemEnum;
 import com.l2m.exception.base.NoDataException;
+import com.l2m.model.MySettingDto;
 import com.l2m.model.SearchDto;
 import com.l2m.repository.support.FavoritesRepositorySupport;
 import com.l2m.repository.support.ItemInfoRepositorySupport;
 import com.l2m.repository.support.MemberRepositorySupport;
+import com.l2m.repository.support.MySettingRepositorySupport;
 import com.l2m.util.L2mApiUtil;
 import com.l2m.util.global.IsNullUtil;
 import com.querydsl.core.QueryResults;
@@ -44,6 +47,9 @@ public class SearchServiceImpl implements SearchService {
   @NonNull
   private MemberRepositorySupport memberRepositorySupport;
 
+  @NonNull
+  private MySettingRepositorySupport mySettingRepositorySupport;
+
   @Override
   public List<SearchDto.itemListInfo> lowPriceSearch(SearchDto.lowPriceSearchParam lowPriceSearchParam) {
 
@@ -67,7 +73,7 @@ public class SearchServiceImpl implements SearchService {
           itemList = L2mApiUtil.getItemList(lowPriceSearchParam.getServer_id(),
                                             info.getItemName(),
                                             lowPriceSearchParam.getFrom_enchant_level(),
-                                            itemEnum);
+                                            itemEnum.getType());
         } catch (IOException e) {
 
         }
@@ -122,7 +128,7 @@ public class SearchServiceImpl implements SearchService {
         List<SearchDto.itemListInfo> result = L2mApiUtil.getItemList(changePopListParam.getServerId(),
                                           itemInfo.getItemName(),
                                           changePopListParam.getEnchantLevel(),
-                                          ItemEnum.getItemEnum(changePopListParam.getItemType()));
+                                          changePopListParam.getItemType());
         
         resultList.addAll(result);
       }
@@ -166,5 +172,56 @@ public class SearchServiceImpl implements SearchService {
     }
 
     return new SearchDto.itemInfoPop(itemInfoResult, itemPriceInfoResult, isFavorite);
+  }
+
+  @Override
+  public SearchDto.mySettingLowPriceSearch mySettingLowPriceSearch(SearchDto.mySettingLowPriceSearchParam mySettingLowPriceSearchParam) {
+    // 1. 나의 세팅 키로 세팅정보 조회(파라미터 세팅)
+    // 2. 나의 세팅 키로 아이템 정보 리스트 조회
+    // 3. 아이템 정보 리스트의 itemKey로 item정보 조회 후 반환
+
+    // 최종 반환 객체
+    final SearchDto.mySettingLowPriceSearch result = new SearchDto.mySettingLowPriceSearch();
+    final String mySettingKey = mySettingLowPriceSearchParam.getMySettingKey();
+
+    // Comparator(현재가가 더 싼것을 찾는다)
+    final Comparator<SearchDto.itemListInfo> comparator = (s1, s2) -> s1.getNow_min_unit_price().compareTo(s2.getNow_min_unit_price());
+
+    // 나의 세팅정보 조회
+    final MySetting mySetting = mySettingRepositorySupport.findByKey(mySettingKey)
+                                  .orElseThrow(() -> new NoDataException("세팅 키가 존재하지 않습니다."));
+
+    // 결과 반환에 포함될 객체
+    final SearchDto.lowPriceSearchParam lowPriceSearchParam = new SearchDto.lowPriceSearchParam(mySetting);
+    final List<SearchDto.itemListInfo> l2mApiItemList = new ArrayList<>();
+    // 나의 세팅 아이템 명 리스트 조회
+    final List<MySettingDto.settingItemList> settingItemList = mySettingRepositorySupport.findSettingItemNameList(mySettingKey);
+    
+    for (MySettingDto.settingItemList settingItem : settingItemList) {
+      List<SearchDto.itemListInfo> itemList = new ArrayList<>();
+
+      try {
+        // 2. 받아온 리스트의 item_id기준으로 l2m 리스트 api 호출
+        itemList = L2mApiUtil.getItemList(lowPriceSearchParam.getServer_id(),
+                                          settingItem.getItemName(),
+                                          lowPriceSearchParam.getFrom_enchant_level(),
+                                          settingItem.getTradeCategoryCode());
+      } catch (IOException e) {
+
+      }
+
+      // 리스트로 조회한 것중 가장싼 아이템만 하나 가져옴
+      SearchDto.itemListInfo minItem = itemList.stream().filter(content -> !IsNullUtil.check(content))
+                                                        .min(comparator)
+                                                        .orElseGet(() -> new SearchDto.itemListInfo());
+
+      // 카테고리명 세팅
+      minItem.setTradeCategoryName(settingItem.getTradeCategoryName());
+
+      l2mApiItemList.add(minItem);
+    }
+
+    result.setList(l2mApiItemList);
+    return result;
   }
 }

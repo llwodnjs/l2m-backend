@@ -1,11 +1,16 @@
 package com.l2m.repository.support;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import com.l2m.domain.MySetting;
 import com.l2m.domain.QMySetting;
+import com.l2m.domain.QSettingItem;
 import com.l2m.model.MySettingDto;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
@@ -34,5 +39,29 @@ public class MySettingRepositorySupportImpl implements MySettingRepositorySuppor
                           .offset(pageable.getOffset())
                           .limit(pageable.getPageSize())
                           .fetchResults();
+  }
+
+  @Override
+  public Optional<MySetting> findByKey(String mySettingKey) {
+    final QMySetting mySetting = QMySetting.mySetting;
+    final BooleanExpression isSettingKey = mySetting.businessKey.eq(mySettingKey);
+
+    return Optional.ofNullable(
+      jpaQueryFactory.select(mySetting)
+                      .from(mySetting)
+                      .where(isSettingKey)
+                      .fetchFirst()
+    );
+  }
+
+  @Override
+  public List<MySettingDto.settingItemList> findSettingItemNameList(String mySettingKey) {
+    final QSettingItem settingItem = QSettingItem.settingItem;
+    final BooleanExpression isSettingKey = settingItem.settingBusinessKey.eq(mySettingKey);
+
+    return jpaQueryFactory.select(Projections.constructor(MySettingDto.settingItemList.class, settingItem))
+                          .from(settingItem)
+                          .where(isSettingKey)
+                          .fetch();
   }
 }

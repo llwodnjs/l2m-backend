@@ -33,9 +33,18 @@ public enum ItemEnum {
   private String tradeCategoryName;
   private String type;
 
+  // 타입명으로 enum 가져오기
   public static ItemEnum getItemEnum(String type) {
     for (ItemEnum itemEnum : ItemEnum.values()) {
       if (itemEnum.getType().equals(type)) return itemEnum;
+    }
+    return null;
+  }
+
+  // 카테고리명으로 type 가져오기
+  public static String getType(String tradeCategoryName) {
+    for (ItemEnum itemEnum : ItemEnum.values()) {
+      if (itemEnum.getTradeCategoryName().equals(tradeCategoryName)) return itemEnum.getType();
     }
     return null;
   }
