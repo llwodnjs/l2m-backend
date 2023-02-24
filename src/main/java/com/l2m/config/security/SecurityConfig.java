@@ -34,7 +34,7 @@ public class SecurityConfig {
 
   private final static String[] memberCheckUrls = {
     "/member/**",
-    "/favorites/**",
+    "/favorite/**",
     "/mySetting/**"
   };
 

@@ -28,4 +28,11 @@ public interface ItemInfoRepositorySupport {
    * @return
    */
   List<ItemInfo> findByItemTypeAndName(SearchDto.changePopListParam changePopListParam);
+
+  /**
+   * 아이템 카테고리 비교를 위한 정보 조회
+   * @param itemId
+   * @return
+   */
+  String findCategoryNameByItemId(Long itemId);
 }

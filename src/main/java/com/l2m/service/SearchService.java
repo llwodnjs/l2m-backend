@@ -34,4 +34,10 @@ public interface SearchService {
    * @return
    */
   SearchDto.mySettingLowPriceSearch mySettingLowPriceSearch(SearchDto.mySettingLowPriceSearchParam mySettingLowPriceSearchParam);
+  
+  /** 
+   * 아이템 비교 팝업 조회
+   * @param itemInfoPopParamList
+   */
+  List<SearchDto.itemInfoPop> getCompareItemInfo(SearchDto.itemCompareListParam itemCompareListParam);
 }

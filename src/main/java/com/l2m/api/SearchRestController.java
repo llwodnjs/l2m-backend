@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,5 +51,11 @@ public class SearchRestController {
   @GetMapping(value = "/mySettingLowPriceSearch")
   public SearchDto.mySettingLowPriceSearch mySettingLowPriceSearch(@ModelAttribute final SearchDto.mySettingLowPriceSearchParam mySettingLowPriceSearchParam) {
     return searchService.mySettingLowPriceSearch(mySettingLowPriceSearchParam);
+  }
+  
+  @Operation(summary = "아이템 비교 정보 조회")
+  @PostMapping(value = "/compareItem")
+  public List<SearchDto.itemInfoPop> getCompareItemInfo(@RequestBody final SearchDto.itemCompareListParam itemCompareListParam) {
+    return searchService.getCompareItemInfo(itemCompareListParam);
   }
 }

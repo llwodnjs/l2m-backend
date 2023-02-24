@@ -353,4 +353,25 @@ public class SearchDto {
     @Schema(description = "나의 세팅 키")
     private String mySettingKey;
   }
+  
+  @Getter
+  @Setter
+  public static class itemCompareListParam {
+    @Schema(description = "아이템 정보 파라미터 리스트")
+    private List<SearchDto.itemInfoPopParam> itemCompareListParam = new ArrayList<>();
+  }
+
+  // @Getter
+  // @Setter
+  // public static class compareItemCategory {
+
+  //   @Schema(description = "아이템 카테고리명")
+  //   private String trade_category_name;
+
+  //   public compareItemCategory(String categoryName){
+  //     this.trade_category_name = categoryName;
+  //   }
+
+  // }
+
 }

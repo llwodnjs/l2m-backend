@@ -224,4 +224,51 @@ public class SearchServiceImpl implements SearchService {
     result.setList(l2mApiItemList);
     return result;
   }
+    
+  public List<SearchDto.itemInfoPop> getCompareItemInfo(SearchDto.itemCompareListParam itemCompareListParam) {
+    
+    final SearchDto.itemInfoPopParam firstParam = itemCompareListParam.getItemCompareListParam().get(0);
+    final SearchDto.itemInfoPopParam secondParam = itemCompareListParam.getItemCompareListParam().get(1);
+
+    /*
+     * 두 개의 아이템 아이디로 하나의 쿼리로 쏴서 비교하려 했으나,
+     * 배열에 담긴 두 개의 아이템 아이디가 동일할 경우 인덱스가 하나인 배열로 반환되어 터짐..
+     * 조언 급구, 일단 급하니 이따구로 해놓고 진행
+    */
+    final String firstCategoryName = itemInfoRepositorySupport.findCategoryNameByItemId(firstParam.getItem_id().longValue());
+    final String secondCategoryName = itemInfoRepositorySupport.findCategoryNameByItemId(secondParam.getItem_id().longValue());
+    
+    if (!firstCategoryName.equals(secondCategoryName))
+      throw new IllegalArgumentException("두 아이템의 카테고리가 맞지 않습니다.");
+    
+    // 반환값 선언
+    List<SearchDto.itemInfoPop> compareList = new ArrayList<SearchDto.itemInfoPop>();
+
+    // param foreach
+    for (SearchDto.itemInfoPopParam itemParam : itemCompareListParam.getItemCompareListParam()) {
+
+      SearchDto.l2mApiItemInfo itemInfoResult = new SearchDto.l2mApiItemInfo();
+      SearchDto.l2mApiPriceInfo itemPriceInfoResult = new SearchDto.l2mApiPriceInfo();
+      Character isFavorite = 'N';
+
+      try {
+        itemInfoResult = L2mApiUtil.getItemInfo(itemParam.getItem_id(), itemParam.getEnchant_level()); // 아이템 정보
+        itemPriceInfoResult = L2mApiUtil.getPriceInfo(itemParam.getItem_id(), itemParam.getServer_id(), itemParam.getEnchant_level()); // 아이템 가격 정보
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+  
+      if (!IsNullUtil.check(itemParam.getUsername())) {
+        final Member member = memberRepositorySupport.findByUsername(itemParam.getUsername())
+          .orElseThrow(() -> new NoDataException("회원 정보가 맞지 않습니다."));
+        
+        final Favorites favorites = favoritesRepositorySupport.findFavoritesUsernameAndItemId(member.getBusinessKey(), itemParam.getItem_id());
+        isFavorite = IsNullUtil.check(favorites) ? 'N' : 'Y'; // 즐겨찾기 목록에 있다면 Y로 세팅
+      }
+
+      compareList.add(new SearchDto.itemInfoPop(itemInfoResult, itemPriceInfoResult, isFavorite));
+    }
+
+    return compareList;
+  }
 }

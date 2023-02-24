@@ -91,4 +91,16 @@ public class ItemInfoRepositorySupportImpl implements ItemInfoRepositorySupport 
                           )
                           .fetch();
   }
+
+  @Override
+  public String findCategoryNameByItemId(Long itemId) {
+    final QItemInfo itemInfo = QItemInfo.itemInfo;
+    
+    final BooleanExpression isItemId = itemInfo.itemId.eq(itemId);
+    
+    return jpaQueryFactory.select(Projections.constructor(String.class, itemInfo.tradeCategoryName))
+                          .from(itemInfo)
+                          .where(isItemId)
+                          .fetchFirst();
+  }
 }
