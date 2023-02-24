@@ -33,10 +33,16 @@ public class SecurityConfig {
 
   private final static String[] noAuthCheckUrls = {
     "/swagger-ui.html**",
+    "/swagger-ui/**",
     "/webjars/springfox-swagger-ui/**",
     "/swagger-resources/**",
-    "/v2/api-docs",
+    "/v3/api-docs/**",
     "/account/**"
+  };
+
+  private final static String[] memberCheckUrls = {
+    "/member/**",
+    "/favorites/**"
   };
 
   @Bean
@@ -72,8 +78,8 @@ public class SecurityConfig {
         // .antMatchers("/admin/**").hasRole("ADMIN")
         // /user 로 시작하는 요청은 USER 권한이 있는 유저에게만 허용
         // .antMatchers("/user/**").hasRole("USER")
-        .antMatchers("/member/**").hasAuthority("USER") // 임시 권한 허용
-        // .anyRequest().denyAll()
+        .antMatchers(memberCheckUrls).hasAuthority("USER") // 임시 권한 허용
+        .anyRequest().denyAll()
         .and()
         // JWT 인증 필터 적용
         .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);

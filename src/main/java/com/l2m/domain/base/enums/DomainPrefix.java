@@ -16,7 +16,8 @@ public enum DomainPrefix {
   FILE("FIL", "File", "세팅 저장 파일"),
   AUTH("AUT", "Auth", "회원 권한"),
   MYSETTING("MYS", "My Setting", "나의 세팅"),
-  SETTINGITEM("SIT", "Setting Item", "나의 세팅 아이템 정보")
+  SETTINGITEM("SIT", "Setting Item", "나의 세팅 아이템 정보"),
+  FAVORITES("FAV", "Favorites", "즐겨찾기 비즈니스 키")
   ;
 
   /**
