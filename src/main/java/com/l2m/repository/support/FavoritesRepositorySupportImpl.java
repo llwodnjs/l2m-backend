@@ -54,7 +54,6 @@ public class FavoritesRepositorySupportImpl implements FavoritesRepositorySuppor
     @Override
     public QueryResults<FavoritesDto.getFavorite> getFavorite(FavoritesDto.getFavoriteParam getFavoriteParam, String memberKey) {
         final QFavorites favorites = QFavorites.favorites;
-        final QMember member = QMember.member;
         final PageRequest pageable = getFavoriteParam.makePageable();
 
         return jpaQueryFactory.select(Projections.constructor(FavoritesDto.getFavorite.class, favorites))

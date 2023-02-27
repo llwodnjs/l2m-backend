@@ -1,5 +1,8 @@
 package com.l2m.service;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,9 +13,11 @@ import com.l2m.domain.Favorites;
 import com.l2m.domain.Member;
 import com.l2m.exception.base.NoDataException;
 import com.l2m.model.FavoritesDto;
+import com.l2m.model.SearchDto;
 import com.l2m.repository.manager.FavoritesRepositoryManager;
 import com.l2m.repository.support.FavoritesRepositorySupport;
 import com.l2m.repository.support.MemberRepositorySupport;
+import com.l2m.util.L2mApiUtil;
 import com.l2m.util.global.IsNullUtil;
 import com.querydsl.core.QueryResults;
 
@@ -70,6 +75,33 @@ public class FavoritesServiceImpl implements FavoritesService {
 
         // return new QueryResults<>(favoritesList, (long) getFavoriteParam.makePageable().getPageSize(), (long) getFavoriteParam.getPage(), favoritesList.size());
         return favoritesRepositorySupport.getFavorite(getFavoriteParam, memberKey);
+    }
+
+    public List<FavoritesDto.getChart> getCharts(FavoritesDto.getChartParam getChartParam) {
+        final List<FavoritesDto.getChart> chartDataList = new ArrayList<FavoritesDto.getChart>();
+
+        for (Integer serverId : getChartParam.getServerIdList()) {
+            SearchDto.l2mApiPriceInfo itemPriceInfoResult = new SearchDto.l2mApiPriceInfo();
+            FavoritesDto.getChart serverPriceInfo = new FavoritesDto.getChart();
+
+            try {
+                itemPriceInfoResult = L2mApiUtil.getPriceInfo(getChartParam.getItemId(), serverId, getChartParam.getEnchantLevel()); // 아이템 가격 정보
+                serverPriceInfo.setServerId(serverId);
+                BigDecimal unitPrice = itemPriceInfoResult.getNow().getUnit_price();
+                
+                if(!IsNullUtil.check(unitPrice)) {
+                    serverPriceInfo.setPrice(unitPrice);
+                } else {
+                    serverPriceInfo.setPrice(BigDecimal.ZERO);
+                }
+
+                chartDataList.add(serverPriceInfo);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return chartDataList;
     }
 
     // @Override

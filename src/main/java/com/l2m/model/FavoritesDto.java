@@ -1,5 +1,8 @@
 package com.l2m.model;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import com.l2m.domain.Favorites;
 import com.l2m.model.global.PageModel;
 
@@ -88,5 +91,29 @@ public class FavoritesDto {
             imgUrl = favorites.getImgUrl();
             isFavorite = favorites.getIsFavorite();
         }
+    }
+    @Getter
+    @Setter
+    public static class getChartParam {
+
+        @Schema(description = "서버 아이디 리스트")
+        private List<Integer> serverIdList;
+
+        @Schema(description = "아이템 아이디")
+        private Integer itemId;
+
+        @Schema(description = "강화 수치")
+        private Integer enchantLevel;
+    }
+
+    @Getter
+    @Setter
+    public static class getChart {
+
+        @Schema(description = "서버 아이디")
+        private Integer serverId;
+
+        @Schema(description = "현 최저가")
+        private BigDecimal price;
     }
 }

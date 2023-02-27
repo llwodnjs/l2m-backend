@@ -1,5 +1,7 @@
 package com.l2m.api;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +39,12 @@ public class FavoritesRestController {
     @GetMapping("/getItems")
     public QueryResults<FavoritesDto.getFavorite> getFavorite(@ModelAttribute final FavoritesDto.getFavoriteParam getFavoriteParam){
         return favoritesService.getFavorite(getFavoriteParam);
+    }
+
+    @Operation(summary = "서버별 차트 조회")
+    @PostMapping("/getCharts")
+    public List<FavoritesDto.getChart> getCharts(@RequestBody final FavoritesDto.getChartParam getChartParam) {
+        return favoritesService.getCharts(getChartParam);
     }
     
 }
