@@ -4,12 +4,14 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import com.l2m.domain.Favorites;
 import com.l2m.domain.QFavorites;
 import com.l2m.domain.QMember;
 import com.l2m.model.FavoritesDto;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -36,16 +38,31 @@ public class FavoritesRepositorySupportImpl implements FavoritesRepositorySuppor
     }
 
     // 회원 키 기준으로 즐겨찾기 등록 상태로 되어있는 아이템 목록 조회
+    // @Override
+    // public List<FavoritesDto.getFavorite> getFavorite(String memberKey) {
+    //     final QFavorites favorites = QFavorites.favorites;
+    //     final QMember member = QMember.member;
+
+    //     return jpaQueryFactory.select(Projections.constructor(FavoritesDto.getFavorite.class, favorites))
+    //                             .from(favorites)
+    //                             .join(member)
+    //                             .on(favorites.memberKey.eq(member.businessKey))
+    //                             .where(favorites.isFavorite.eq('Y'))
+    //                             .fetch();
+    // }
+
     @Override
-    public List<FavoritesDto.getFavorite> getFavorite(String memberKey) {
+    public QueryResults<FavoritesDto.getFavorite> getFavorite(FavoritesDto.getFavoriteParam getFavoriteParam, String memberKey) {
         final QFavorites favorites = QFavorites.favorites;
         final QMember member = QMember.member;
+        final PageRequest pageable = getFavoriteParam.makePageable();
 
         return jpaQueryFactory.select(Projections.constructor(FavoritesDto.getFavorite.class, favorites))
                                 .from(favorites)
-                                .join(member)
-                                .on(favorites.memberKey.eq(member.businessKey))
-                                .where(favorites.isFavorite.eq('Y'))
-                                .fetch();
+                                .where(favorites.isFavorite.eq('Y')
+                                .and(favorites.memberKey.eq(memberKey)))
+                                .offset(pageable.getOffset())
+                                .limit(pageable.getPageSize())
+                                .fetchResults();
     }
 }

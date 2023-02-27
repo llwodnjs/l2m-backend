@@ -66,10 +66,10 @@ public class FavoritesServiceImpl implements FavoritesService {
         
         final String memberKey = member.getBusinessKey();
         // 등록되어 있는 즐겨찾기 목록 불러오기
-        final List<FavoritesDto.getFavorite> favoritesList = favoritesRepositorySupport.getFavorite(memberKey);
-        getFavoriteParam.setSize(5);
+        // final List<FavoritesDto.getFavorite> favoritesList = favoritesRepositorySupport.getFavorite(getFavoriteParam memberKey);
 
-        return new QueryResults<>(favoritesList, (long) getFavoriteParam.makePageable().getPageSize(), (long) getFavoriteParam.getPage(), favoritesList.size());
+        // return new QueryResults<>(favoritesList, (long) getFavoriteParam.makePageable().getPageSize(), (long) getFavoriteParam.getPage(), favoritesList.size());
+        return favoritesRepositorySupport.getFavorite(getFavoriteParam, memberKey);
     }
 
     // @Override

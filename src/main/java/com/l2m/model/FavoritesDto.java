@@ -71,6 +71,9 @@ public class FavoritesDto {
         @Schema(description = "등급 코드")
         private String gradeCode;
 
+        @Schema(description = "등급 이름")
+        private String gradeName;
+
         @Schema(description = "아이템 이미지 url")
         private String imgUrl;
 
@@ -81,6 +84,7 @@ public class FavoritesDto {
             itemId = favorites.getItemId();
             itemName = favorites.getItemName();
             gradeCode = favorites.getGradeCode();
+            gradeName = favorites.getGradeName();
             imgUrl = favorites.getImgUrl();
             isFavorite = favorites.getIsFavorite();
         }

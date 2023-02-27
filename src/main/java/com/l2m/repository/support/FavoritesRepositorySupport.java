@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.l2m.domain.Favorites;
 import com.l2m.model.FavoritesDto;
+import com.querydsl.core.QueryResults;
 
 public interface FavoritesRepositorySupport {
 
@@ -12,5 +13,6 @@ public interface FavoritesRepositorySupport {
     public Favorites findFavoritesUsernameAndItemId(String memberKey, Integer itemId);
 
     // 멤버 비즈니스키로 즐겨찾기 조회
-    public List<FavoritesDto.getFavorite> getFavorite(String memberKey);
+    // public List<FavoritesDto.getFavorite> getFavorite(String memberKey);
+    public QueryResults<FavoritesDto.getFavorite> getFavorite(FavoritesDto.getFavoriteParam getFavoriteParam, String memberKey);
 }
