@@ -12,6 +12,7 @@ import com.l2m.domain.MySetting;
 import com.l2m.domain.QMySetting;
 import com.l2m.domain.QSettingItem;
 import com.l2m.model.MySettingDto;
+import com.l2m.util.global.IsNullUtil;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -30,12 +31,16 @@ public class MySettingRepositorySupportImpl implements MySettingRepositorySuppor
   @Override
   public QueryResults<MySettingDto.list> list(MySettingDto.listParam listParam, String memberKey) {
     final QMySetting mySetting = QMySetting.mySetting;
+    final String searchKeyword = listParam.getSearchKeyword();
     final BooleanExpression isMemberKey = mySetting.memberKey.eq(memberKey);
+    final BooleanExpression isKeyword = !IsNullUtil.check(searchKeyword) ? mySetting.settingName.contains(searchKeyword) : null;
     final PageRequest pageable = listParam.makePageable();
 
     return jpaQueryFactory.select(Projections.constructor(MySettingDto.list.class, mySetting))
                           .from(mySetting)
-                          .where(isMemberKey)
+                          .where(
+                            isMemberKey
+                            , isKeyword)
                           .offset(pageable.getOffset())
                           .limit(pageable.getPageSize())
                           .fetchResults();
