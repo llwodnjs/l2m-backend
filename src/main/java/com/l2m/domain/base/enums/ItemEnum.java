@@ -26,9 +26,10 @@ public enum ItemEnum {
   SIGIL("시길", "sigil"),
   // 방어구 [e]
   // 악세서리[s]
+  BELT("벨트", "belt"),
   NECK("목걸이", "neck"),
-  RING("반지", "ring"),
-  BELT("벨트", "belt");
+  RING("반지", "ring")
+  ;
 
   private String tradeCategoryName;
   private String type;
