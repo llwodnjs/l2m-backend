@@ -48,6 +48,11 @@ public class MemberServiceImpl implements MemberService {
     if (memberRepositorySupport.findByUsername(username).isPresent()) {
       throw new NoDataException("이미 해당 아이디로 가입된 회원이 존재합니다.");
     }
+
+    // 비밀번호와 비밀번호 확인란 체크
+    if (!joinParam.getPassword().equals(joinParam.getRePassword())){
+      throw new BadCredentialsException("비밀번호와 확인 비밀번호가 맞지 않습니다.");
+    }
     
     return memberRepositoryManager.join(joinParam);
   }

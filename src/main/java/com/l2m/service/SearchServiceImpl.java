@@ -53,6 +53,9 @@ public class SearchServiceImpl implements SearchService {
   @Override
   public List<SearchDto.itemListInfo> lowPriceSearch(SearchDto.lowPriceSearchParam lowPriceSearchParam) {
 
+    if (IsNullUtil.check(lowPriceSearchParam.getClass_id()) && IsNullUtil.check(lowPriceSearchParam.getGrade_id())) {
+      throw new IllegalArgumentException("검색조건을 선택해주세요.");
+    }
     // 반환용 리스트
     final List<SearchDto.itemListInfo> resultList = new ArrayList<>();
     // final Map<String, Object> resultMap = new LinkedHashMap<>();
